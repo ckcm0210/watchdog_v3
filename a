@@ -1,0 +1,83 @@
+合併總結（發生原因＋修復措施＋結果與預防）
+
+一、問題概述
+
+GUI 側問題
+現象：黑色 console 無回應、白色視窗不停 loading；更早前曾出現 RuntimeError: main thread is not in main loop、Variable.del 例外、Tcl_AsyncDelete 等錯誤。
+根因：tkinter 被錯誤地跨線程使用或以 root.update() 取代 mainloop；有在非 UI 線程建立/操作/銷毀 Tk 物件，或由不同線程銷毀 Tk 導致。
+比較輸出問題
+現象：Excel 已 edit+save，但 baseline vs current 比較表格無彈出。
+日誌：cannot access local variable 'load_baseline' where it is not associated with a value
+根因：在 core/comparison.py 的函數內做 from core.baseline import load_baseline/save_baseline，令 Python 視它們為函數內局部名稱，導致較早引用時變成「未初始化的本地變數」（UnboundLocalError），比較流程被中斷，無表格輸出，console 也不會彈。
+二、修復措施
+
+修復 tkinter/黑窗卡死
+將 Tk 全部集中在「專用 UI 線程」：
+UI 線程內 create_window() + root.mainloop()。
+其他線程一律不直接碰 Tk，改用 queue 丟訊息；UI 用 root.after(100, check_messages) 定時拉取並顯示。
+安全關閉：
+提供 stop()，用 root.after(0, ...) 在 UI 線程執行 root.quit() + root.destroy()。
+在 main 註冊 atexit 清理，避免 daemon 線程被硬殺引發 RuntimeError/AsyncDelete。
+移除跨線程的 root.update() 與任何 widget 操作。
+修復比較流程 UnboundLocalError
+將函數內的 from core.baseline import … 改為模組級引入：
+在檔案頂部 import core.baseline as baseline。
+以 baseline.load_baseline(...) 與 baseline.save_baseline(...) 取代函數內 import。
+結果：比較流程完成並打印表格；utils/logging 偵測 Address/Baseline/Current 等關鍵字，黑色 console 以 is_comparison=True 彈窗。
+三、修復後結果
+
+黑色 console 回復即時輸出，偵測到比較會自動彈到前景。
+Timeline 頁可見最新事件。
+不再出現 load_baseline UnboundLocalError；亦不再出現 main loop/thread 相關的 tkinter 例外。
+四、使用與設定檢查
+
+確保：
+ENABLE_BLACK_CONSOLE = true
+CONSOLE_POPUP_ON_COMPARISON = true
+已建立 baseline（首次掃描/建立基準線之後才有比較）。
+監控目錄（WATCH_FOLDERS 或 MONITOR_ONLY_FOLDERS）包含目標檔案所在位置。
+五、預防清單
+
+一個進程只用一個 tk.Tk()，其他視窗用 Toplevel。
+不在非 UI 線程建立/操作任何 tkinter 物件（包括 tk.Variable）。
+不用 root.update() 取代 mainloop，更不可跨線程呼叫。
+視窗關閉要在創建它的 UI 線程執行（用 root.after 派發）。
+退出流程先 stop UI，再退出其他線程；需要時把 UI 線程設為非 daemon 並在清理中 join。
+加上靜態檢查避免同類錯誤（如 ruff/flake8 的 F823：在賦值前引用局部變數）。
+
+
+
+Copilot said: 呢堆錯誤（RuntimeError: main thread is not in main
+呢堆錯誤（RuntimeError: main thread is not in main loop、Variable.del 例外、Tcl_AsyncDelete: async handler deleted by the wrong thread）都係同 tkinter 線程使用方式有關，核心原因係「用錯咗線程去建立／操作／銷毀 Tk 物件」。
+
+發生原因（你當時環境最可能嘅幾個觸發點）
+
+在非 UI 線程操作 Tk 元件：例如喺工作線程內直接 text_widget.insert、root.update()、或建立 tk.StringVar 等，tkinter 不是 thread-safe。
+在不同線程銷毀 Tk：例如程式退出時，主線程或其他線程直接 root.destroy()，與創建 Tk 個線程唔一致，會出 Tcl_AsyncDelete。
+UI 線程設為 daemon，程式結束時被硬殺：Python 關閉過程中嘗試回收 tkinter 變數（Variable.del），但當時 mainloop 已經唔喺主線程或已停止，導致 RuntimeError: main thread is not in main loop。
+我做咗啲咩去修好
+
+將所有 Tk 操作集中到單一 UI 線程：
+在 UI 線程內 create_window() + root.mainloop()。
+其他線程一律唔直接碰 Tk，改為透過 queue 丟訊息，UI 線程用 root.after(...) 定時拉取顯示。
+安全關閉窗口：
+提供 stop()，用 root.after(0, ...) 於 UI 線程執行 root.quit() + root.destroy()，避免跨線程銷毀。
+在 main 程式註冊 atexit handler，退出前先 stop()，減少 daemon 線程被硬殺引發的 del/Tcl_AsyncDelete 噪音。
+移除任何 root.update() 或跨線程 widget 調用，避免 mainloop 不在正確線程時被呼叫。
+點解而家唔會再出
+
+Tk 被創建、跑 mainloop、更新 UI、銷毀，全程同一條 UI 線程處理；跨線程互動只經 queue + after，遵守 tkinter 的單線程模型，所以不會再有「main thread is not in main loop」或者「async handler deleted by the wrong thread」。
+退出時先優雅關閉 UI，再結束其他線程，避免 Python 收尾期替你回收 Tk 對象而踩到錯誤。
+預防清單（之後改動可對照）
+
+一個進程只用一個 tk.Tk()；其他視窗用 Toplevel。
+唔好喺非 UI 線程建立或操作任何 tkinter 物件（包括 tk.Variable）。
+唔好用 root.update() 去代替 mainloop，更唔好跨線程調它。
+關閉視窗一定要喺創建它嘅嗰條 UI 線程執行（用 root.after 派發）。
+程式退出時先 stop UI，再退出其他線程；必要時把 UI 線程設為非 daemon 並在清理時 join。
+如果仲間中喺退出時見到殘留警告，通常代表 UI 線程未完全停妥就結束進程，可以再檢查：
+
+atexit 的 stop() 係咪真有被調用；
+UI 線程係咪 daemon=True（可考慮設為 False，並在 finally 裏面 join 一下）。
+
+
