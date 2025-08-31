@@ -174,21 +174,41 @@ class BlackConsoleWindow:
         self.running = False
         # 清理計時器
         if self.topmost_timer:
-            self.root.after_cancel(self.topmost_timer)
-        self.root.destroy()
+            try:
+                self.root.after_cancel(self.topmost_timer)
+            except tk.TclError:
+                pass  # 視窗已關閉
+        # 安全地銷毀視窗
+        if self.root:
+            try:
+                self.root.destroy()
+            except tk.TclError:
+                pass  # 視窗已關閉
+            self.root = None
+    
+    def update(self):
+        """更新 tkinter 事件循環 - 由主線程調用"""
+        if self.root and self.running:
+            try:
+                self.root.update()
+            except tk.TclError as e:
+                # 視窗已關閉或發生錯誤
+                if "invalid command name" in str(e) or "application has been destroyed" in str(e):
+                    self.running = False
+                else:
+                    # 其他錯誤，記錄但繼續運行
+                    import logging
+                    logging.warning(f"Console update error: {e}")
+            except Exception as e:
+                import logging
+                logging.error(f"Unexpected console update error: {e}")
+                # 嚴重錯誤，停止運行
+                self.running = False
     
     def start(self):
-        """在新線程中啟動視窗"""
-        def run_window():
-            self.create_window()
-            self.root.mainloop()
-        
-        window_thread = threading.Thread(target=run_window, daemon=True)
-        window_thread.start()
-        
-        # 等待視窗創建完成
-        while self.root is None:
-            time.sleep(0.1)
+        """在主線程中啟動視窗"""
+        self.create_window()
+        # 不再使用 mainloop()，讓主程式控制事件循環
 
 # 全局 console 視窗實例
 black_console = None

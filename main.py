@@ -186,11 +186,27 @@ def main():
     
     try:
         while not settings.force_stop:
-            time.sleep(1)
+            time.sleep(0.1)  # Reduce sleep time for better responsiveness
+            # Update console GUI if it exists
+            if console and console.running:
+                try:
+                    console.update()
+                except Exception as e:
+                    import logging
+                    logging.error(f"Console update failed: {e}")
+                    # 如果 console 更新失敗，停止 console 但繼續運行主程式
+                    console.running = False
     except KeyboardInterrupt:
         pass
     finally:
         print("\n🔄 正在停止監控...")
+        # 先關閉 console
+        if console and console.running:
+            try:
+                console.on_closing()
+            except Exception as e:
+                import logging
+                logging.warning(f"Console cleanup failed: {e}")
         observer.stop()
         observer.join()
         active_polling_handler.stop()
