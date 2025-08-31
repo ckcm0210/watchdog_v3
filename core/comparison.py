@@ -16,6 +16,7 @@ from core.baseline import load_baseline, baseline_file_path
 import logging
 import hashlib
 import json as _json
+import core.baseline as baseline
 
 # ... [print_aligned_console_diff 和其他輔助函數保持不變] ...
 def print_aligned_console_diff(old_data, new_data, file_info=None, max_display_changes=0):
@@ -327,8 +328,7 @@ def compare_excel_changes(file_path, silent=False, event_number=None, is_polling
                 git_json_path = sync_history_to_git_repo(file_path, current_data, last_author=new_author, event_number=event_number, meaningful_changes_count=mc_count)
                 # 3) 插入事件索引（SQLite）
                 try:
-                    from core.baseline import load_baseline
-                    old_cells = (load_baseline(base_key) or {}).get('cells', {})
+                    old_cells = (baseline.load_baseline(base_key) or {}).get('cells', {})
                 except Exception:
                     old_cells = baseline_cells or {}
                 insert_event_index(file_path,
@@ -354,8 +354,7 @@ def compare_excel_changes(file_path, silent=False, event_number=None, is_polling
                      "source_mtime": cur_mtime,
                      "source_size": cur_size
                 }
-                from core.baseline import save_baseline
-                if not save_baseline(base_key, updated_baseline):
+                if not baseline.save_baseline(base_key, updated_baseline):
                     print(f"[WARNING] 基準線更新失敗: {os.path.basename(file_path)}")
         
         return any_sheet_has_changes

@@ -1046,58 +1046,9 @@ class SettingsDialog(tk.Toplevel):
 
 
 def show_settings_ui():
-    import threading
-    import sys
-    
-    # 檢查是否在主線程中運行
-    if threading.current_thread() is not threading.main_thread():
-        print("錯誤：GUI 必須在主線程中運行")
-        # 設置取消啟動標誌
-        try:
-            data = runtime.load_runtime_settings() or {}
-            data['STARTUP_CANCELLED'] = True
-            save_runtime_settings(data)
-        except Exception:
-            pass
-        return
-    
-    root = None
-    dlg = None
-    try:
-        # 創建根視窗
-        root = tk.Tk()
-        root.withdraw()
-        
-        # 創建對話框
-        dlg = SettingsDialog(root)
-        
-        # 等待對話框關閉
-        root.wait_window(dlg)
-        
-    except Exception as e:
-        print(f"GUI 啟動失敗: {e}")
-        # 設置取消啟動標誌
-        try:
-            data = runtime.load_runtime_settings() or {}
-            data['STARTUP_CANCELLED'] = True
-            save_runtime_settings(data)
-        except Exception:
-            pass
-    finally:
-        # 清理資源
-        if dlg:
-            try:
-                dlg.destroy()
-            except Exception:
-                pass
-        if root:
-            try:
-                # 清理所有 tkinter 變數
-                root.quit()
-                root.destroy()
-            except Exception:
-                pass
-        
-        # 強制垃圾回收
-        import gc
-        gc.collect()
+    root = tk.Tk()
+    root.withdraw()
+    dlg = SettingsDialog(root)
+    # Keep window visible and interactive; don't block main thread longer than necessary
+    root.wait_window(dlg)
+    root.destroy()

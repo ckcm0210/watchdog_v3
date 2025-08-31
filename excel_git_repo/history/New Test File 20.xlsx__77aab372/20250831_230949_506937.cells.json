@@ -1,0 +1,488 @@
+{
+  "timestamp": "2025-08-31T23:09:49.506937",
+  "file": "C:\\Users\\user\\Desktop\\pytest - 複製\\!space folder\\New Test File 20.xlsx",
+  "last_author": "Michael Cheng",
+  "event_number": 3,
+  "changes_count": 1,
+  "cells": {
+    "工作表 1": {
+      "A1": {
+        "formula": "=1+'C:\\Users\\user\\Desktop\\pytest\\[File5_v9.xlsx]工作表1'!$A$1+INDEX('工作表 2'!A1:C3,MATCH('工作表 1'!A17,'工作表 2'!A1:A3,0),MATCH('工作表 1'!A18,'工作表 2'!A1:C1,0))-INDEX('C:\\Users\\user\\Desktop\\pytest\\[File5_v9.xlsx]工作表1'!$A$11:$C$13,MATCH('工作表 1'!A17,'工作表 2'!A1:A3,0),MATCH('工作表 1'!A18,'工作表 2'!A1:C1,0))",
+        "value": "4150",
+        "cached_value": "4150"
+      },
+      "C1": {
+        "formula": "=A1+INDEX(U12:W14,1,3)+INDIRECT(\"A\"&D3)+SUM(G2:L9)+VLOOKUP(\"A\",$G$1:$H$3, 2, FALSE)",
+        "value": "8320",
+        "cached_value": "8320"
+      },
+      "E1": {
+        "formula": "=INDIRECT(\"A\"&D3)",
+        "value": 4150,
+        "cached_value": 4150
+      },
+      "G1": {
+        "formula": null,
+        "value": "A",
+        "cached_value": "A"
+      },
+      "H1": {
+        "formula": "=G6",
+        "value": 2,
+        "cached_value": 2
+      },
+      "A2": {
+        "formula": "='C:\\Users\\user\\Desktop\\pytest\\[File5_v9.xlsx]工作表1'!$A$2",
+        "value": "工作表2",
+        "cached_value": "工作表2"
+      },
+      "C2": {
+        "formula": "=INDIRECT(\"A\"&D3)",
+        "value": "4150",
+        "cached_value": "4150"
+      },
+      "G2": {
+        "formula": null,
+        "value": "B",
+        "cached_value": "B"
+      },
+      "H2": {
+        "formula": "=G6",
+        "value": 2,
+        "cached_value": 2
+      },
+      "A3": {
+        "formula": "='C:\\Users\\user\\Desktop\\pytest\\[File5_v9.xlsx]工作表1'!$A$3",
+        "value": "工作表2",
+        "cached_value": "工作表2"
+      },
+      "C3": {
+        "formula": "=INDEX(U12:W14,1,3)",
+        "value": "7",
+        "cached_value": "7"
+      },
+      "D3": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "G3": {
+        "formula": null,
+        "value": "C",
+        "cached_value": "C"
+      },
+      "H3": {
+        "formula": "=G6",
+        "value": 2,
+        "cached_value": 2
+      },
+      "L3": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "F5": {
+        "formula": "=VLOOKUP(\"A\",$G$1:$H$3, 2, FALSE)",
+        "value": 2,
+        "cached_value": 2
+      },
+      "I5": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "L5": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "O5": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "D6": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "G6": {
+        "formula": "=I5+I7",
+        "value": "2",
+        "cached_value": "2"
+      },
+      "B7": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "I7": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "H8": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "Q8": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "C9": {
+        "formula": null,
+        "value": "a",
+        "cached_value": "a"
+      },
+      "M9": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "O9": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "C12": {
+        "formula": "=VLOOKUP(\"B\",'工作表 2'!E15:$H$17, 2, FALSE)",
+        "value": "21",
+        "cached_value": "21"
+      },
+      "D12": {
+        "formula": "=INDEX('C:\\Users\\user\\Desktop\\pytest\\[File5_v9.xlsx]工作表1'!$A$11:$C$13,MATCH('工作表 1'!A17,'工作表 2'!A1:A3,0),MATCH('工作表 1'!A18,'工作表 2'!A1:C1,0))",
+        "value": 5,
+        "cached_value": 5
+      },
+      "M12": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "U12": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "V12": {
+        "formula": null,
+        "value": 4,
+        "cached_value": 4
+      },
+      "W12": {
+        "formula": null,
+        "value": 7,
+        "cached_value": 7
+      },
+      "C13": {
+        "formula": "=VLOOKUP(\"B\",'工作表 2'!E15:$H$17, 2, FALSE)-'工作表 2'!F16",
+        "value": "0",
+        "cached_value": "0"
+      },
+      "M13": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "U13": {
+        "formula": null,
+        "value": 2,
+        "cached_value": 2
+      },
+      "V13": {
+        "formula": null,
+        "value": 5,
+        "cached_value": 5
+      },
+      "W13": {
+        "formula": null,
+        "value": 8,
+        "cached_value": 8
+      },
+      "N14": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "U14": {
+        "formula": null,
+        "value": 3,
+        "cached_value": 3
+      },
+      "V14": {
+        "formula": null,
+        "value": 6,
+        "cached_value": 6
+      },
+      "W14": {
+        "formula": null,
+        "value": 9,
+        "cached_value": 9
+      },
+      "C15": {
+        "formula": "=VLOOKUP(\"B\",'工作表 2'!E15:$H$17, 2, FALSE)-'工作表 2'!F16+ (HLOOKUP(\"C\",'工作表 2'!F14:H17, 3, FALSE)-'工作表 2'!H16)",
+        "value": "0",
+        "cached_value": "0"
+      },
+      "C16": {
+        "formula": "=HLOOKUP(\"C\",'工作表 2'!F14:H17, 3, FALSE)-'工作表 2'!H16",
+        "value": "0",
+        "cached_value": "0"
+      },
+      "F16": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "L16": {
+        "formula": null,
+        "value": 1,
+        "cached_value": 1
+      },
+      "A17": {
+        "formula": "=F16+D6",
+        "value": "2",
+        "cached_value": "2"
+      },
+      "U17": {
+        "formula": "=INDEX(U12:W14,1,3)",
+        "value": 7,
+        "cached_value": 7
+      },
+      "A18": {
+        "formula": "=F16+H8+B7+1",
+        "value": "4",
+        "cached_value": "4"
+      },
+      "A19": {
+        "formula": "=INDEX('工作表 2'!A1:C3,MATCH('工作表 1'!A17,'工作表 2'!A1:A3,0),MATCH('工作表 1'!A18,'工作表 2'!A1:C1,0))",
+        "value": "5",
+        "cached_value": "5"
+      },
+      "G19": {
+        "formula": "='工作表 2'!A1:C3",
+        "value": "1",
+        "cached_value": "1"
+      },
+      "H19": {
+        "formula": null,
+        "value": 4,
+        "cached_value": 4
+      },
+      "I19": {
+        "formula": null,
+        "value": 7,
+        "cached_value": 7
+      },
+      "G20": {
+        "formula": null,
+        "value": "2",
+        "cached_value": "2"
+      },
+      "H20": {
+        "formula": null,
+        "value": 5,
+        "cached_value": 5
+      },
+      "I20": {
+        "formula": null,
+        "value": 8,
+        "cached_value": 8
+      },
+      "G21": {
+        "formula": null,
+        "value": "3",
+        "cached_value": "3"
+      },
+      "H21": {
+        "formula": null,
+        "value": 6,
+        "cached_value": 6
+      },
+      "I21": {
+        "formula": null,
+        "value": 9,
+        "cached_value": 9
+      },
+      "Q21": {
+        "formula": null,
+        "value": 22,
+        "cached_value": 22
+      },
+      "D22": {
+        "formula": "=VLOOKUP(\"B\",'工作表 2'!E15:$H$17, 2, FALSE)",
+        "value": 21,
+        "cached_value": 21
+      },
+      "J27": {
+        "formula": "=HLOOKUP(\"C\",'工作表 2'!F14:H17, 3, FALSE)",
+        "value": 23,
+        "cached_value": 23
+      },
+      "K27": {
+        "formula": null,
+        "value": 2,
+        "cached_value": 2
+      },
+      "D28": {
+        "formula": "='工作表 2'!F16",
+        "value": 21,
+        "cached_value": 21
+      }
+    },
+    "工作表 2": {
+      "A1": {
+        "formula": null,
+        "value": "1",
+        "cached_value": "1"
+      },
+      "B1": {
+        "formula": null,
+        "value": 4,
+        "cached_value": 4
+      },
+      "C1": {
+        "formula": null,
+        "value": "7",
+        "cached_value": "7"
+      },
+      "A2": {
+        "formula": null,
+        "value": "2",
+        "cached_value": "2"
+      },
+      "B2": {
+        "formula": null,
+        "value": 5,
+        "cached_value": 5
+      },
+      "C2": {
+        "formula": null,
+        "value": "8",
+        "cached_value": "8"
+      },
+      "A3": {
+        "formula": null,
+        "value": "3",
+        "cached_value": "3"
+      },
+      "B3": {
+        "formula": null,
+        "value": 6,
+        "cached_value": 6
+      },
+      "C3": {
+        "formula": null,
+        "value": "9",
+        "cached_value": "9"
+      },
+      "G8": {
+        "formula": "=G16",
+        "value": "13",
+        "cached_value": "13"
+      },
+      "K11": {
+        "formula": null,
+        "value": 999,
+        "cached_value": 999
+      },
+      "F14": {
+        "formula": null,
+        "value": "A",
+        "cached_value": "A"
+      },
+      "G14": {
+        "formula": null,
+        "value": "B",
+        "cached_value": "B"
+      },
+      "H14": {
+        "formula": null,
+        "value": "C",
+        "cached_value": "C"
+      },
+      "N14": {
+        "formula": null,
+        "value": "aaaaa",
+        "cached_value": "aaaaa"
+      },
+      "E15": {
+        "formula": null,
+        "value": "A",
+        "cached_value": "A"
+      },
+      "F15": {
+        "formula": null,
+        "value": "11",
+        "cached_value": "11"
+      },
+      "G15": {
+        "formula": null,
+        "value": "12",
+        "cached_value": "12"
+      },
+      "H15": {
+        "formula": null,
+        "value": "13",
+        "cached_value": "13"
+      },
+      "E16": {
+        "formula": null,
+        "value": "B",
+        "cached_value": "B"
+      },
+      "F16": {
+        "formula": null,
+        "value": "21",
+        "cached_value": "21"
+      },
+      "G16": {
+        "formula": null,
+        "value": "13",
+        "cached_value": "13"
+      },
+      "H16": {
+        "formula": null,
+        "value": "23",
+        "cached_value": "23"
+      },
+      "E17": {
+        "formula": null,
+        "value": "C",
+        "cached_value": "C"
+      },
+      "F17": {
+        "formula": null,
+        "value": "31",
+        "cached_value": "31"
+      },
+      "G17": {
+        "formula": null,
+        "value": "23",
+        "cached_value": "23"
+      },
+      "H17": {
+        "formula": null,
+        "value": "33",
+        "cached_value": "33"
+      },
+      "C18": {
+        "formula": null,
+        "value": "aaa",
+        "cached_value": "aaa"
+      },
+      "C22": {
+        "formula": null,
+        "value": "a",
+        "cached_value": "a"
+      },
+      "L26": {
+        "formula": null,
+        "value": "aaa",
+        "cached_value": "aaa"
+      }
+    }
+  }
+}
